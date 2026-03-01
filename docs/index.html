@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ragalahari Gallery Downloader — Bulk HD Photo Downloader CLI Tool</title>
+    <meta name="description" content="Free open-source CLI tool to bulk download HD photo galleries from Ragalahari.com. Search actors, batch download with range selection, parallel threads, resume support. Python-based.">
+    <meta name="keywords" content="ragalahari downloader, ragalahari gallery downloader, bulk image downloader, HD photo downloader, ragalahari photos, gallery scraper, python downloader, batch download, ragalahari images, tollywood photos, actress gallery download">
+    <meta name="author" content="corinovate">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ragadl.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ragadl.com/">
+    <meta property="og:title" content="Ragalahari Gallery Downloader — Bulk HD Photo Downloader">
+    <meta property="og:description" content="Free open-source CLI tool to bulk download HD photo galleries from Ragalahari.com. Search actors, batch download, parallel threads.">
+    <meta property="og:image" content="https://ragadl.com/og-image.png">
+    <meta property="og:site_name" content="Ragalahari Gallery Downloader">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://ragadl.com/">
+    <meta name="twitter:title" content="Ragalahari Gallery Downloader — Bulk HD Photo Downloader">
+    <meta name="twitter:description" content="Free open-source CLI tool to bulk download HD photo galleries from Ragalahari.com. Search actors, batch download, parallel threads.">
+    <meta name="twitter:image" content="https://ragadl.com/og-image.png">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Ragalahari Gallery Downloader",
+        "operatingSystem": "Windows, macOS, Linux",
+        "applicationCategory": "UtilitiesApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "description": "A powerful CLI tool to browse and bulk download HD photo galleries from Ragalahari.com with batch selection, parallel downloads, and resume support.",
+        "url": "https://ragadl.com/",
+        "downloadUrl": "https://github.com/corinovate/ragalahari-dl",
+        "softwareVersion": "2.0",
+        "author": {
+            "@type": "Person",
+            "name": "corinovate"
+        },
+        "license": "https://opensource.org/licenses/MIT",
+        "programmingLanguage": "Python"
+    }
+    </script>
+
+    <!-- Favicon (inline SVG as data URI) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📸</text></svg>">
+
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #5A52D5;
+            --accent: #FF6584;
+            --bg: #0F1117;
+            --bg-card: #1A1D2E;
+            --bg-code: #141625;
+            --text: #E2E8F0;
+            --text-dim: #94A3B8;
+            --border: #2D3148;
+            --green: #4ADE80;
+            --yellow: #FACC15;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Gradient blob background */
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-1 { background: var(--primary); top: -200px; left: -100px; }
+        .glow-2 { background: var(--accent); bottom: -200px; right: -100px; }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* NAV */
+        nav {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--primary); }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(108, 99, 255, 0.15);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(108, 99, 255, 0.3);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            color: var(--text-dim);
+            font-size: 1.15rem;
+            max-width: 560px;
+            margin: 0 auto 36px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.35);
+        }
+        .btn-primary:hover { box-shadow: 0 6px 30px rgba(108, 99, 255, 0.5); }
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { border-color: var(--primary); }
+
+        /* TERMINAL DEMO */
+        .terminal {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin: 50px auto;
+            max-width: 640px;
+            overflow: hidden;
+        }
+        .terminal-bar {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border);
+        }
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #FF5F57; }
+        .dot-yellow { background: #FEBC2E; }
+        .dot-green { background: #28C840; }
+        .terminal-body {
+            padding: 20px 24px;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--text-dim);
+        }
+        .terminal-body .cmd { color: var(--green); }
+        .terminal-body .flag { color: var(--yellow); }
+        .terminal-body .str { color: var(--accent); }
+        .terminal-body .dim { color: #475569; }
+        .terminal-body .white { color: var(--text); }
+        .terminal-body .purple { color: var(--primary); }
+
+        /* FEATURES */
+        .section { padding: 60px 0; }
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        .section-sub {
+            text-align: center;
+            color: var(--text-dim);
+            margin-bottom: 48px;
+            font-size: 1rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        .feature-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+        }
+        .fi-purple { background: rgba(108, 99, 255, 0.15); }
+        .fi-pink { background: rgba(255, 101, 132, 0.15); }
+        .fi-green { background: rgba(74, 222, 128, 0.15); }
+        .fi-yellow { background: rgba(250, 204, 21, 0.15); }
+        .feature-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .feature-card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* INSTALL */
+        .install-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 32px;
+            max-width: 560px;
+            margin: 0 auto;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.88rem;
+            line-height: 2;
+            position: relative;
+        }
+        .install-block .comment { color: #475569; }
+        .install-block .cmd { color: var(--green); }
+
+        /* USAGE MODES */
+        .modes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .mode-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+        }
+        .mode-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .mode-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .mode-card li {
+            color: var(--text-dim);
+            font-size: 0.88rem;
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .mode-card li::before {
+            content: '→';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* FAQ */
+        .faq { max-width: 700px; margin: 0 auto; }
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .faq-q {
+            padding: 18px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            user-select: none;
+        }
+        .faq-q:hover { color: var(--primary); }
+        .faq-arrow { transition: transform 0.3s; font-size: 0.8rem; color: var(--text-dim); }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            padding: 0 24px;
+        }
+        .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 18px; }
+        .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline; }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .modes { grid-template-columns: 1fr; }
+            .nav-links { gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+
+    <div class="container">
+        <!-- NAV -->
+        <nav>
+            <a href="#" class="logo">ragalahari<span>-dl</span></a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#install">Install</a>
+                <a href="https://github.com/corinovate/ragalahari-dl" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="badge">v2.0 — Open Source</div>
+            <h1>Bulk download <span class="highlight">HD galleries</span> from Ragalahari</h1>
+            <p>A fast, feature-rich command-line tool to search actors, browse galleries, and batch download full-resolution images with parallel threads.</p>
+            <div class="btn-group">
+                <a href="https://github.com/corinovate/ragalahari-dl" class="btn btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Get Started
+                </a>
+                <a href="https://github.com/corinovate/ragalahari-dl" class="btn btn-secondary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    View on GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- TERMINAL DEMO -->
+        <div class="terminal">
+            <div class="terminal-bar">
+                <div class="terminal-dot dot-red"></div>
+                <div class="terminal-dot dot-yellow"></div>
+                <div class="terminal-dot dot-green"></div>
+            </div>
+            <div class="terminal-body">
+                <span class="dim">$</span> <span class="cmd">pip install</span> <span class="flag">-r</span> requirements.txt<br>
+                <span class="dim">$</span> <span class="cmd">python</span> ragalahari_dl.py<br>
+                <br>
+                <span class="purple">╔══════════════════════════════════════════════════╗</span><br>
+                <span class="purple">║</span> <span class="white">RAGALAHARI GALLERY DOWNLOADER</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flag">v2.0</span> <span class="purple">║</span><br>
+                <span class="purple">╚══════════════════════════════════════════════════╝</span><br>
+                <br>
+                <span class="white">&nbsp; Main Menu</span><br>
+                <span class="dim">&nbsp; ─────────────────────────────────────</span><br>
+                <span class="cmd">&nbsp; 1</span> &nbsp;Latest Galleries &nbsp;<span class="dim">New & trending</span><br>
+                <span class="cmd">&nbsp; 2</span> &nbsp;Simple Mode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="dim">Search, select, download</span><br>
+                <span class="cmd">&nbsp; 3</span> &nbsp;Advanced Mode &nbsp;&nbsp;&nbsp;<span class="dim">Batch, bulk, categories</span><br>
+                <span class="str">&nbsp; 0</span> &nbsp;Exit<br>
+                <br>
+                <span class="dim">Select &gt;</span> <span class="white">3</span><br>
+                <span class="dim">Select gallery(s) &gt;</span> <span class="str">1-50</span> <span class="dim">← downloads 50 galleries</span>
+            </div>
+        </div>
+
+        <!-- FEATURES -->
+        <section id="features" class="section">
+            <h2 class="section-title">Everything you need</h2>
+            <p class="section-sub">Search, browse, and download — all from your terminal.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon fi-purple">&#x1F50D;</div>
+                    <h3>Smart Search</h3>
+                    <p>Search actors by name with alphabetical index navigation. Find any gallery in seconds.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon fi-pink">&#x1F4E6;</div>
+                    <h3>Batch Download</h3>
+                    <p>Select multiple galleries with range syntax — <code>1-50</code>, <code>3,5,7</code>, or simply <code>all</code>.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon fi-green">&#x26A1;</div>
+                    <h3>Parallel Threads</h3>
+                    <p>Multi-threaded downloads with configurable thread count (1-20) for maximum speed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon fi-yellow">&#x1F5BC;</div>
+                    <h3>Full HD Images</h3>
+                    <p>Automatically extracts full-resolution images — no thumbnails, no ads, no junk.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon fi-purple">&#x1F4C2;</div>
+                    <h3>Category Browse</h3>
+                    <p>Browse Events, Exclusive Shoots, Movie Stills, Posters, and Latest Galleries.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon fi-pink">&#x1F504;</div>
+                    <h3>Pause &amp; Resume</h3>
+                    <p>Press <strong>P</strong> anytime to pause downloads, press again to resume. Skips already-downloaded files on restart.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INSTALL -->
+        <section id="install" class="section">
+            <h2 class="section-title">Up and running in 30 seconds</h2>
+            <p class="section-sub">Just Python 3.7+ and two dependencies.</p>
+            <div class="install-block">
+                <span class="comment"># Clone the repo</span><br>
+                <span class="cmd">git clone</span> https://github.com/corinovate/ragalahari-dl.git<br>
+                <span class="cmd">cd</span> ragalahari-dl<br>
+                <br>
+                <span class="comment"># Install dependencies</span><br>
+                <span class="cmd">pip install</span> -r requirements.txt<br>
+                <br>
+                <span class="comment"># Run</span><br>
+                <span class="cmd">python</span> ragalahari_dl.py
+            </div>
+        </section>
+
+        <!-- MODES -->
+        <section class="section">
+            <h2 class="section-title">Two modes, one tool</h2>
+            <p class="section-sub">Simple mode for quick grabs, Advanced mode for power users.</p>
+            <div class="modes">
+                <div class="mode-card">
+                    <h3>Simple Mode</h3>
+                    <ul>
+                        <li>Search & download by name</li>
+                        <li>Paste a gallery URL</li>
+                        <li>Paste an actor profile URL</li>
+                        <li>Quick & guided workflow</li>
+                    </ul>
+                </div>
+                <div class="mode-card">
+                    <h3>Advanced Mode</h3>
+                    <ul>
+                        <li>Batch download with ranges</li>
+                        <li>Download ALL actor galleries</li>
+                        <li>Bulk from multiple URLs</li>
+                        <li>Browse by category</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ (SEO-rich) -->
+        <section class="section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-sub">Common questions about ragalahari-dl.</p>
+            <div class="faq">
+                <div class="faq-item">
+                    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        What is Ragalahari Gallery Downloader?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-a">Ragalahari Gallery Downloader (ragalahari-dl) is a free, open-source Python command-line tool that lets you search for actors on Ragalahari.com, browse their photo galleries, and batch download full-resolution HD images with parallel threads.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        Does it download full HD images or thumbnails?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-a">It downloads full-resolution HD images only. The tool automatically converts thumbnail URLs to their full-size counterparts, so you always get the highest quality version available.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        Can I download multiple galleries at once?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-a">Yes! Use Advanced Mode with range syntax like <code>1-50</code>, <code>3,5,7</code>, <code>1-10,15-20</code>, or just type <code>all</code> to download every gallery. You can also download all galleries for a specific actor in one go.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        What platforms does it support?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-a">It works on Windows, macOS, and Linux — anywhere Python 3.7+ is available. Just install the two dependencies (requests, beautifulsoup4) and you're ready to go.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        Is it free to use?
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-a">Completely free and open source under the MIT License. You can use it, modify it, and distribute it. Contributions are welcome on GitHub.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Structured Data for SEO -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What is Ragalahari Gallery Downloader?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Ragalahari Gallery Downloader (ragalahari-dl) is a free, open-source Python command-line tool that lets you search for actors on Ragalahari.com, browse their photo galleries, and batch download full-resolution HD images with parallel threads."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Does it download full HD images or thumbnails?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It downloads full-resolution HD images only. The tool automatically converts thumbnail URLs to their full-size counterparts, so you always get the highest quality version available."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Can I download multiple galleries at once?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes! Use Advanced Mode with range syntax like 1-50, 3,5,7, 1-10,15-20, or just type all to download every gallery."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What platforms does it support?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It works on Windows, macOS, and Linux — anywhere Python 3.7+ is available."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Is it free to use?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Completely free and open source under the MIT License."
+                    }
+                }
+            ]
+        }
+        </script>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>
+                Made by <strong>corinovate</strong> &middot;
+                MIT License &middot;
+                <a href="https://github.com/corinovate/ragalahari-dl">GitHub</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
