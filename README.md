@@ -28,17 +28,41 @@ A powerful, feature-rich command-line tool to browse and bulk download HD photo 
 ## Screenshots
 
 ```
+     ┌─┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬─┐
+     │ │▓▓│  │▓▓│  │▓▓│  │▓▓│  │▓▓│  │▓▓│  │▓▓│ │
+     ├─┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴─┤
+     │       ___                                  │
+     │      (o o)    /\    Search . Browse         │
+     │      __|__   /  \   Select . Download       │
+     │     /     \ / HD \  Batch  . Resume         │
+     │    / [====] \    /                          │
+     │    \       / \  /   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓        │
+     │     \_____/   \/    ▓ RAGALAHARI  ▓        │
+     │      |   |          ▓   GALLERY   ▓        │
+     │     /|   |\         ▓  DOWNLOAD   ▓        │
+     │    / |   | \        ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓        │
+     │   /__|   |__\                               │
+     ├─┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬──┬─┤
+     │ │▓▓│  │▓▓│  │▓▓│  │▓▓│  │▓▓│  │▓▓│  │▓▓│ │
+     └─┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴──┴─┘
+
 ╔══════════════════════════════════════════════════════════╗
 ║                                                          ║
 ║   RAGALAHARI  GALLERY  DOWNLOADER                v2.0   ║
 ║                                                          ║
+║   Bulk HD Photo Downloader  •  ragalahari.com            ║
+║                                                          ║
 ╚══════════════════════════════════════════════════════════╝
+
+  ⚡ 3 incomplete download(s) found!
+  Select 'Resume Downloads' below to continue.
 
   Main Menu
   ─────────────────────────────────────────────
-  1  Latest Galleries  New & trending on the site
-  2  Simple Mode       Search, select, download
-  3  Advanced Mode     Batch, bulk, categories
+  R  Resume Downloads   Continue where you left off
+  1  Latest Galleries   New & trending on the site
+  2  Simple Mode        Search, select, download
+  3  Advanced Mode      Batch, bulk, categories
   0  Exit
 ```
 
