@@ -108,6 +108,19 @@ pip install .
 ragalahari-dl
 ```
 
+### Standalone Executable (no Python needed)
+
+Download `ragalahari-dl.exe` from the [Releases](https://github.com/corinovate/ragalahari-dl/releases) page — just double-click and run, no Python installation required.
+
+To build the `.exe` yourself:
+
+```bash
+pip install pyinstaller
+python build.py
+```
+
+The executable will be in the `dist/` folder.
+
 ## Usage
 
 ### Simple Mode — Search and Download

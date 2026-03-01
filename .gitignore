@@ -31,3 +31,4 @@ Thumbs.db
 # Distribution
 *.tar.gz
 *.whl
+*.spec
