@@ -1,0 +1,258 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 540">
+  <defs>
+    <clipPath id="tc">
+      <rect x="1" y="37" width="798" height="502" rx="0"/>
+    </clipPath>
+  </defs>
+
+  <style>
+    text { font-family: 'SF Mono','Fira Code','Cascadia Code','Consolas',monospace; font-size: 13px; }
+    .bg { fill: #0d1117; }
+    .bar { fill: #161b22; }
+    .bdr { stroke: #30363d; stroke-width: 1; fill: none; }
+    .dr { fill: #ff5f57; } .dy { fill: #febc2e; } .dg { fill: #28c840; }
+    .p  { fill: #7ee787; } .w  { fill: #e6edf3; } .d  { fill: #484f58; }
+    .c  { fill: #58a6ff; } .m  { fill: #bc8cff; } .y  { fill: #d29922; }
+    .r  { fill: #ff7b72; } .b  { font-weight: bold; }
+    .tt { fill: #8b949e; font-size: 12px; }
+
+    /*
+      30s total loop:
+      0-1s   blank
+      1s     command
+      2s     banner top
+      3s     banner title
+      3.5s   banner subtitle
+      4s     banner bottom
+      5s     menu header
+      5.5s   menu item 1
+      6s     menu item 2
+      6.5s   menu item 3
+      7s     menu item 4
+      8s     user picks 2
+      9.5s   search
+      11s    found results
+      11.5s  result 1
+      12s    result 2
+      12.5s  result 3
+      13.5s  select actor
+      14.5s  select galleries
+      16s    progress 82%
+      18.5s  progress 94%
+      21s    progress 100%
+      22.5s  complete + gallery 2
+      23.5s  gallery 2 bar
+      24.5s  gallery 2 progress
+      26-28s hold
+      28-30s fade out
+    */
+
+    /* show at time, hide at 93.3% (28s), loop */
+    @keyframes a1  { 0%,3.2%  {opacity:0} 3.3%  {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a2  { 0%,6.5%  {opacity:0} 6.6%  {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a3  { 0%,9.8%  {opacity:0} 9.9%  {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a4  { 0%,11.5% {opacity:0} 11.6% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a5  { 0%,13.2% {opacity:0} 13.3% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a6  { 0%,16.5% {opacity:0} 16.6% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a7  { 0%,18.2% {opacity:0} 18.3% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a8  { 0%,19.8% {opacity:0} 19.9% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a9  { 0%,21.5% {opacity:0} 21.6% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a10 { 0%,23.2% {opacity:0} 23.3% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a11 { 0%,26.5% {opacity:0} 26.6% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a12 { 0%,31.5% {opacity:0} 31.6% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a13 { 0%,36.5% {opacity:0} 36.6% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a14 { 0%,38.2% {opacity:0} 38.3% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a15 { 0%,39.8% {opacity:0} 39.9% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a16 { 0%,41.5% {opacity:0} 41.6% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a17 { 0%,44.8% {opacity:0} 44.9% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a18 { 0%,48.2% {opacity:0} 48.3% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+
+    /* progress bars: show then hide for next */
+    @keyframes q1 { 0%,53.2% {opacity:0} 53.3% {opacity:1} 61.5% {opacity:0} }
+    @keyframes q2 { 0%,61.5% {opacity:0} 61.6% {opacity:1} 69.8% {opacity:0} }
+    @keyframes q3 { 0%,69.8% {opacity:0} 69.9% {opacity:1} 74.8% {opacity:0} }
+
+    /* completion lines */
+    @keyframes a19 { 0%,74.8% {opacity:0} 74.9% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a20 { 0%,78.2% {opacity:0} 78.3% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+    @keyframes a21 { 0%,81.5% {opacity:0} 81.6% {opacity:1} 93.3% {opacity:1} 93.4% {opacity:0} }
+
+    .s1  { opacity:0; animation: a1  30s infinite; }
+    .s2  { opacity:0; animation: a2  30s infinite; }
+    .s3  { opacity:0; animation: a3  30s infinite; }
+    .s4  { opacity:0; animation: a4  30s infinite; }
+    .s5  { opacity:0; animation: a5  30s infinite; }
+    .s6  { opacity:0; animation: a6  30s infinite; }
+    .s7  { opacity:0; animation: a7  30s infinite; }
+    .s8  { opacity:0; animation: a8  30s infinite; }
+    .s9  { opacity:0; animation: a9  30s infinite; }
+    .s10 { opacity:0; animation: a10 30s infinite; }
+    .s11 { opacity:0; animation: a11 30s infinite; }
+    .s12 { opacity:0; animation: a12 30s infinite; }
+    .s13 { opacity:0; animation: a13 30s infinite; }
+    .s14 { opacity:0; animation: a14 30s infinite; }
+    .s15 { opacity:0; animation: a15 30s infinite; }
+    .s16 { opacity:0; animation: a16 30s infinite; }
+    .s17 { opacity:0; animation: a17 30s infinite; }
+    .s18 { opacity:0; animation: a18 30s infinite; }
+    .p1  { opacity:0; animation: q1  30s infinite; }
+    .p2  { opacity:0; animation: q2  30s infinite; }
+    .p3  { opacity:0; animation: q3  30s infinite; }
+    .s19 { opacity:0; animation: a19 30s infinite; }
+    .s20 { opacity:0; animation: a20 30s infinite; }
+    .s21 { opacity:0; animation: a21 30s infinite; }
+  </style>
+
+  <!-- Window chrome -->
+  <rect class="bg" width="800" height="540" rx="10"/>
+  <rect class="bar" width="800" height="36" rx="10"/>
+  <rect class="bg" y="26" width="800" height="10"/>
+  <rect class="bdr" x="0.5" y="0.5" width="799" height="539" rx="10"/>
+  <circle class="dr" cx="20" cy="18" r="6"/>
+  <circle class="dy" cx="40" cy="18" r="6"/>
+  <circle class="dg" cx="60" cy="18" r="6"/>
+  <text class="tt" x="400" y="22" text-anchor="middle">ragalahari-dl — Terminal</text>
+
+  <g clip-path="url(#tc)">
+
+    <!-- $ python ragalahari_dl.py -->
+    <g class="s1">
+      <text class="d" x="20" y="60">$</text>
+      <text class="p" x="35" y="60">python</text>
+      <text class="w" x="90" y="60">ragalahari_dl.py</text>
+    </g>
+
+    <!-- Banner -->
+    <g class="s2">
+      <text class="c" x="20" y="88">╔══════════════════════════════════════════════════════╗</text>
+    </g>
+    <g class="s3">
+      <text class="c" x="20" y="105">║</text>
+      <text class="w b" x="40" y="105">RAGALAHARI  GALLERY  DOWNLOADER</text>
+      <text class="y" x="430" y="105">v2.0</text>
+      <text class="c" x="475" y="105">║</text>
+    </g>
+    <g class="s4">
+      <text class="c" x="20" y="122">║</text>
+      <text class="d" x="40" y="122">Bulk HD Photo Downloader  •  ragalahari.com</text>
+      <text class="c" x="475" y="122">║</text>
+    </g>
+    <g class="s5">
+      <text class="c" x="20" y="139">╚══════════════════════════════════════════════════════╝</text>
+    </g>
+
+    <!-- Menu -->
+    <g class="s6">
+      <text class="w b" x="30" y="166">Main Menu</text>
+      <text class="d" x="30" y="183">─────────────────────────────────────────────</text>
+    </g>
+    <g class="s7">
+      <text class="y" x="30" y="200">1</text>
+      <text class="w" x="50" y="200">Latest Galleries</text>
+      <text class="d" x="210" y="200">New &amp; trending</text>
+    </g>
+    <g class="s8">
+      <text class="p" x="30" y="217">2</text>
+      <text class="w" x="50" y="217">Simple Mode</text>
+      <text class="d" x="210" y="217">Search, select, download</text>
+    </g>
+    <g class="s9">
+      <text class="m" x="30" y="234">3</text>
+      <text class="w" x="50" y="234">Advanced Mode</text>
+      <text class="d" x="210" y="234">Batch, bulk, categories</text>
+    </g>
+    <g class="s10">
+      <text class="d" x="30" y="251">0  Exit</text>
+    </g>
+
+    <!-- User picks 2 -->
+    <g class="s11">
+      <text class="w" x="30" y="275">&gt;</text>
+      <text class="c" x="50" y="275">2</text>
+    </g>
+
+    <!-- Search -->
+    <g class="s12">
+      <text class="w b" x="30" y="299">Search actor/actress name:</text>
+      <text class="y" x="260" y="299">Kajal</text>
+    </g>
+    <g class="s13">
+      <text class="p b" x="30" y="323">Found 3 result(s)</text>
+    </g>
+    <g class="s14">
+      <text class="y" x="30" y="343">1</text>
+      <text class="w" x="50" y="343">Kajal Aggarwal</text>
+      <text class="d" x="200" y="343">(247 galleries)</text>
+    </g>
+    <g class="s15">
+      <text class="y" x="30" y="360">2</text>
+      <text class="w" x="50" y="360">Kajal Agarwal HD</text>
+      <text class="d" x="215" y="360">(82 galleries)</text>
+    </g>
+    <g class="s16">
+      <text class="y" x="30" y="377">3</text>
+      <text class="w" x="50" y="377">Kajal Latest</text>
+      <text class="d" x="180" y="377">(15 galleries)</text>
+    </g>
+
+    <!-- Select -->
+    <g class="s17">
+      <text class="w" x="30" y="401">Select &gt;</text>
+      <text class="c" x="105" y="401">1</text>
+    </g>
+    <g class="s18">
+      <text class="w" x="30" y="421">Select gallery(s) &gt;</text>
+      <text class="r" x="195" y="421">1-50</text>
+      <text class="d" x="235" y="421">← batch download 50 galleries</text>
+    </g>
+
+    <!-- Progress 82% -->
+    <g class="p1">
+      <text class="p" x="30" y="448">Downloading 1/50:</text>
+      <text class="w" x="185" y="448">Kajal at Movie Launch</text>
+      <text class="c" x="30" y="465">  [████████████████████████░░░░░░]</text>
+      <text class="w" x="325" y="465">82%</text>
+      <text class="d" x="360" y="465">38/46 images  2.4 MB/s</text>
+      <text class="d" x="30" y="482">  Press</text>
+      <text class="y" x="78" y="482">P</text>
+      <text class="d" x="90" y="482">to pause  |  Ctrl+C to save &amp; quit</text>
+    </g>
+
+    <!-- Progress 94% -->
+    <g class="p2">
+      <text class="p" x="30" y="448">Downloading 1/50:</text>
+      <text class="w" x="185" y="448">Kajal at Movie Launch</text>
+      <text class="c" x="30" y="465">  [████████████████████████████░░]</text>
+      <text class="w" x="325" y="465">94%</text>
+      <text class="d" x="360" y="465">43/46 images  2.1 MB/s</text>
+      <text class="d" x="30" y="482">  Press</text>
+      <text class="y" x="78" y="482">P</text>
+      <text class="d" x="90" y="482">to pause  |  Ctrl+C to save &amp; quit</text>
+    </g>
+
+    <!-- Progress 100% -->
+    <g class="p3">
+      <text class="p" x="30" y="448">Downloading 1/50:</text>
+      <text class="w" x="185" y="448">Kajal at Movie Launch</text>
+      <text class="p" x="30" y="465">  [██████████████████████████████]</text>
+      <text class="p" x="325" y="465">100%</text>
+      <text class="d" x="370" y="465">46/46 images  2.3 MB/s</text>
+    </g>
+
+    <!-- Complete + next gallery -->
+    <g class="s19">
+      <text class="p b" x="30" y="448">✓ Gallery 1/50 complete!</text>
+      <text class="d" x="250" y="448">46 images  •  128.4 MB  •  19s</text>
+    </g>
+    <g class="s20">
+      <text class="p" x="30" y="468">Downloading 2/50:</text>
+      <text class="w" x="185" y="468">Kajal Aggarwal Stills</text>
+    </g>
+    <g class="s21">
+      <text class="c" x="30" y="488">  [████░░░░░░░░░░░░░░░░░░░░░░░░░░]</text>
+      <text class="w" x="325" y="488">12%</text>
+      <text class="d" x="360" y="488">5/42 images  2.6 MB/s</text>
+    </g>
+
+  </g>
+</svg>

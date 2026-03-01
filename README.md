@@ -6,6 +6,10 @@
 
 A powerful, feature-rich command-line tool to browse and bulk download HD photo galleries from [Ragalahari.com](https://www.ragalahari.com). Search for actors/actresses, browse latest galleries, select multiple galleries with range syntax, and download full-resolution images with parallel threads.
 
+<p align="center">
+  <img src="docs/demo.svg" alt="ragalahari-dl demo" width="700">
+</p>
+
 ---
 
 ## Features
