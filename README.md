@@ -87,7 +87,14 @@ A powerful, feature-rich command-line tool to browse and bulk download HD photo 
 
 - Python 3.7 or higher
 
-### Quick Start
+### Install from PyPI (Recommended)
+
+```bash
+pip install ragalahari-dl
+ragalahari-dl
+```
+
+### Install from Source
 
 ```bash
 # Clone the repository
@@ -99,13 +106,6 @@ pip install -r requirements.txt
 
 # Run
 python ragalahari_dl.py
-```
-
-### Install as a package (optional)
-
-```bash
-pip install .
-ragalahari-dl
 ```
 
 ### Standalone Executable (no Python needed)
